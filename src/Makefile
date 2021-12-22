@@ -7,7 +7,7 @@ CPPFLAGS=-I -DDEBUG
 LDFLAGS=-lm
 
 #Special rules and targets
-.PHONY: all clean help genkey
+.PHONY: all clean help genkey test
 
 #Rules and targets
 all: $(APP)
@@ -28,7 +28,11 @@ DES.o: DES.c DES.h
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $<
 
 clean:
-	@rm -f *.o $(APP) genkey
+	@rm -f *.o $(APP) genkey output.txt
+
+test:
+	@./test
+
 
 help :
 	@echo -e "Usage :"

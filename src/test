@@ -1,0 +1,13 @@
+#!/bin/sh
+echo "Hello, World!" > plaintext 
+truncate -s 64 plaintext
+echo "INPUT:"
+cat plaintext
+./genkey > key
+awk '!/sir/' key > temp && mv temp key
+./desbox -k "$(cat key)" plaintext
+echo "\nOUTPUT:"
+cat output.txt
+./desbox -d -o decrypted -k "$(cat key)" output.txt
+echo "\n\nDECRYPTED:"
+cat out
