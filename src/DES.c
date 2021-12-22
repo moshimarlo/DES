@@ -148,6 +148,15 @@ void addbit(uint64_t *block, uint64_t from,
         *block += (FIRSTBIT >> position_to);
 }
 
+static uint64_t exponent(int num, int exp)
+{
+	uint64_t ret = 1;
+	for (int i = 0; i < exp; i++) {
+		ret *= num;
+	}
+	return ret;
+}
+
 void Permutation(uint64_t* data, bool initial)
 {
     uint64_t data_temp = 0;
@@ -293,7 +302,7 @@ void rounds(uint64_t *data, uint64_t key)
         {
             if( ((right_block << (6 * ii + jj)) & FIRSTBIT) == FIRSTBIT)
             {
-                coordy += 2^(4 - jj);
+                coordy += exponent(2, 4 - jj);
             }
         }
     
