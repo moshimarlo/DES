@@ -1,13 +1,24 @@
 #!/bin/sh
-echo "Hello, World!" > plaintext 
-truncate -s 64 plaintext
+
+plaintext="./plaintext"
+decrypted="./decrypted"
+key="./key"
+
+echo "Hello, World!" > $plaintext
+truncate -s 64 $plaintext
 echo "INPUT:"
-cat plaintext
-./genkey > key
-awk '!/sir/' key > temp && mv temp key
-./desbox -k "$(cat key)" plaintext
+cat $plaintext
+./genkey > $key
+awk '!/sir/' $key > temp && mv temp $key
+./desbox -k "$(cat key)" $plaintext
 echo "\nOUTPUT:"
 cat output.txt
-./desbox -d -o decrypted -k "$(cat key)" output.txt
+./desbox -d -o $decrypted -k "$(cat key)" output.txt
 echo "\n\nDECRYPTED:"
-cat out
+cat $decrypted
+echo "\nCOMPARING..."
+if cmp -s "$plaintext" "$decrypted"; then
+	echo "Plaintext and decrypted ciphertext are equal.\nTEST PASSED"
+else
+	echo "Plaintext and decrypted ciphertext are unequal\nTEST FAILED"
+fi
